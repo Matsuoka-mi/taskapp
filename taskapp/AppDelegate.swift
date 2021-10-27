@@ -6,17 +6,36 @@
 //
 
 import UIKit
+import UserNotifications    //追加
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDelegate {
 
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //ユーザーに通知の許可を求める
+        //ここからレッスン６　チャプター７.２
+        
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .sound]){(granted, error) in
+            //Enable or disable features based on authorization
+            
+        } //ここまでチャプター７.２
+        
+        //chapter7.5 フォアグラウンドでも通知
+        center.delegate = self
         return true
     }
 
+    // アプリがフォアグラウンドの時に通知を受け取ると呼ばれるメソッド --- ここから ---
+       func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+           completionHandler([.banner, .list, .sound])
+       } // --- ここまで追加 ---
+    
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
