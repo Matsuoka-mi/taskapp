@@ -22,7 +22,7 @@ class Task: Object {
     
     //カテゴリ
     //課題
-    @objc dynamic var category:String = " "
+    @objc dynamic var category:String = ""
     
     //idをプライマリーキーとして設定
     override static func primaryKey() -> String{
